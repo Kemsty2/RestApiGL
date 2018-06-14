@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 router.get('/restauration', function(req, res, next){
     Sauvergarde.find({}, function(err, sauvegardes){
         if(err)
-            res.status(400).send(err);
+            res.json({"success": 0, "message": err + "\n Impossible d'effectuer la restauration"});
         res.json(sauvegardes);
     });
 });
@@ -19,8 +19,8 @@ router.post('/sauvegarde', function (req, res, next) {
     var sauvegarde = new Sauvergarde(req.body);
     sauvegarde.save(function (err) {
         if(err)
-            res.status(400).send(err);
-        res.status(200).send("Votre Sauvegarde a été effectué avec succès");
+            res.json({"success": 0, "message": err + "\n Sauvegarde Echoué"});
+        res.json({"success": 1 , "message": "Sauvegarde Effectué"});
     });
 });
 

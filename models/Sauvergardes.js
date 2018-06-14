@@ -2,30 +2,41 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var contactSchema = new Schema({
-    nom_contact: String,
+    nom: String,
     numero: String,
-    date_creation: Date
+    operateur: String
 });
 
 var messageSchema = new Schema({
-    contenu: String,
-    est_enregistré: Boolean,
-    date_creation: Date
+    texte: String,
+    date_heure: String,
+    sent : Boolean,
+    total: Number,
+    success: Number,
+    failed: Number
 });
 
 
 var groupeSchema = new Schema({
-    nom_groupe: {type: String, required:true},
-    date_creation: {type: Date},
-    contacts: {type: [contactSchema], default: []},
-    messages: {type: [messageSchema], default: []}
+    nom: {type: String, required:true}
 });
 
+var groupemessageSchema = new Schema({
+    id_groupe: Number,
+    id_message: Number
+});
+
+var groupecontactSchema = new Schema({
+    id_groupe: Number,
+    id_contact: Number
+});
 
 var SauvergardeSchema = new Schema({
-    email: {type: String, required: true},
+    contacts: {type: [contactSchema], default: []},
     groupes: {type: [groupeSchema], default: []},
-    date_creation_sauvegarde: {type: Date, default: Date.now()}
+    messages: {type: [messageSchema], default: []},
+    groupesmessage : {type: [groupemessageSchema], default: []},
+    groupecontact: {type: [groupecontactSchema], default: []},
 });
 
 module.exports = mongoose.model('Sauvergardes', SauvergardeSchema);
